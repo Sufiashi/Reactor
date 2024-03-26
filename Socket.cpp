@@ -52,6 +52,7 @@ void Socket::bind(const InetAddress& servaddr)
     {
         perror("bind() failed"); close(fd_); exit(-1);
     }
+    setipport(servaddr.ip(),servaddr.port());
 }
 
 void Socket::listen(int nn)
@@ -73,3 +74,18 @@ int Socket::accept(InetAddress& clientaddr)
     return clientfd; 
 }
 
+std::string Socket::ip()  const    //返回ip
+{
+    return ip_;
+}
+
+uint16_t Socket::port()  const    //返回端口
+{
+    return port_;
+}
+
+
+void Socket::setipport(const std::string &ip,uint16_t port){
+    ip_=ip;
+    port_=port;
+}

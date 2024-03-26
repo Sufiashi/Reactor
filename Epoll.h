@@ -14,13 +14,14 @@ class Channel;
 class Epoll{
 private:
     static const int MaxEvents=100;
-    int epollfd_=-1;        //epoll句柄，在狗赞函数中创建
+    int epollfd_=-1;                       //epoll句柄，在狗赞函数中创建
     epoll_event events_[MaxEvents];        //存放epoll_wait返回事件的数组。在构造函数中分配内存
 public:
     Epoll();                //创建fd
     ~Epoll();               //关闭fd
-    void addfd(int fd,uint32_t op);                        //把fd和他需要监视的使劲按添加到红黑树上
-    void updatechannel(Channel* ch);                          //把channel添加/更新到红黑树上，channel中有fd，也有需要监视的事件
-    std::vector<Channel*> loop(int timeout=-1);         //运行epoll_wait,等待事件复读生，易发生的事件用vector容器返回
+    void addfd(int fd,uint32_t op);                         //把fd和他需要监视的使劲按添加到红黑树上
+    void updatechannel(Channel* ch);                        //把channel添加/更新到红黑树上，channel中有fd，也有需要监视的事件
+    void removechannel(Channel* ch);                        //从红黑树上删除channel
+    std::vector<Channel*> loop(int timeout=-1);             //运行epoll_wait,等待事件复读生，易发生的事件用vector容器返回
 
 };
